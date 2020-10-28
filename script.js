@@ -21,9 +21,10 @@ function findNatlParks(searchState, maxResults) {
   };
   
   const queryString = formatQueryParams(params)
-  console.log(queryString)
+  
   const url = searchURL + '?' + queryString;
-
+    console.log(url)
+    console.dir(params)
   fetch(url)
     .then(response => {
       if (response.ok) {
@@ -62,8 +63,12 @@ function displayResults(responseJson) {
 function createStateCodeArray(){
     let stateArray = []
     stateArray.push($('#state-input').val());
-    stateArray.push($('#state-input-2').val());
-    return(stateArray);
+    if ($('#state-input-2').val() === ""){
+        return stateArray;
+    } else {
+        stateArray.push($('#state-input-2').val());
+        return(stateArray);
+    }
 }
 
 
@@ -71,10 +76,10 @@ function createStateCodeArray(){
 function watchForm() {
   $('form').submit(event => {
     event.preventDefault();
-    //const searchState = createStateCodeArray();
-    const searchState = ["FL, DC"]
+    const searchState = createStateCodeArray();
+    const state = searchState.join(",");
     const maxResults = $('#js-max-results').val();
-    findNatlParks(searchState, maxResults);
+    findNatlParks(state, maxResults);
   });
 }
 
