@@ -1,14 +1,13 @@
 'use strict';
 
-// put your own value below!
 const apiKey = 'CAnOeGL6kTbEdNxVW2AVsWPK828Yf4tlXtZZKLvp'; 
 const searchURL = 'https://developer.nps.gov/api/v1/parks';
 
 
-function formatQueryParams(params) {
-  const queryItems = Object.keys(params)
-    .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
-  return queryItems.join('&');
+function formatQueryParams(params) { 
+  const queryItems = Object.keys(params) 
+    .map(key => `${key}=${params[key]}`) 
+  return queryItems.join('&'); 
 }
 
 
@@ -18,8 +17,8 @@ function findNatlParks(searchState, maxResults) {
     stateCode: searchState,
     limit: maxResults,
     api_key: apiKey
-  };
-  
+  }
+
   const queryString = formatQueryParams(params)
   
   const url = searchURL + '?' + queryString;
@@ -63,7 +62,7 @@ function displayResults(responseJson) {
 function createStateCodeArray(){
     let stateArray = []
     stateArray.push($('#state-input').val());
-    if ($('#state-input-2').val() === ""){
+    if ($('#state-input-2').val() === "" || $('#state-input').val() === $('#state-input-2').val()){
         return stateArray;
     } else {
         stateArray.push($('#state-input-2').val());
