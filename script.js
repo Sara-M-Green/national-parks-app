@@ -10,7 +10,6 @@ function formatQueryParams(params) {
   return queryItems.join('&'); 
 }
 
-
 function findNatlParks(searchState, maxResults) {
     console.log(searchState)
   const params = {
@@ -49,9 +48,6 @@ function displayResults(responseJson) {
     //and website URL
     $('#js-results-list').append(
         `<li><h3><a href="${responseJson.data[i].url}">${responseJson.data[i].fullName}</a></h3>
-        <h4>${responseJson.data[i].addresses[0].line1}<br>
-        ${responseJson.data[i].addresses[0].city}, ${responseJson.data[i].addresses[0].stateCode} ${responseJson.data[i].addresses[0].postalCode}
-        </h4>
         <p>${responseJson.data[i].description}</p>
         </li>`
       )};
@@ -59,23 +55,10 @@ function displayResults(responseJson) {
     $('#js-results').removeClass('hidden');
 };
 
-function createStateCodeArray(){
-    let stateArray = []
-    stateArray.push($('#state-input').val());
-    if ($('#state-input-2').val() === "" || $('#state-input').val() === $('#state-input-2').val()){
-        return stateArray;
-    } else {
-        stateArray.push($('#state-input-2').val());
-        return(stateArray);
-    }
-}
-
-
-
 function watchForm() {
   $('form').submit(event => {
     event.preventDefault();
-    const searchState = createStateCodeArray();
+    const searchState = $('#state-input').val();
     const state = searchState.join(",");
     const maxResults = $('#js-max-results').val();
     findNatlParks(state, maxResults);
